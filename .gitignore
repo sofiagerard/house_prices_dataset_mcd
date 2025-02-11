@@ -1,0 +1,13 @@
+# Ignorar archivos de datos
+*.csv
+*.txt
+*.pdf
+
+# Ignorar archivos de logs y temporales
+*.log
+*.tmp
+
+# Ignorar archivos de configuración y credenciales
+config.yaml
+config.ini
+*.env
