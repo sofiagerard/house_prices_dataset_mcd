@@ -12,4 +12,7 @@ dependencies:
   - ipykernel
   - seaborn=0.12.2
   - xgboost
+  - black
+  - flake8
+  - pylint
 prefix: /opt/anaconda3/envs/tareas
