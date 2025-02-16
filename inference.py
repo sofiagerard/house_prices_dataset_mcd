@@ -6,13 +6,12 @@ from src.model_utils import load_model, make_predictions, save_predictions
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-
 def run_inference(data_path: str, model_path: str, output_path: str):
     """Genera predicciones utilizando un modelo entrenado."""
     try:
-        # Cargar datos
+        # Cargar datos desde la carpeta prep directamente
         df = pd.read_csv(data_path)
-        logging.info("🔍 Datos cargados correctamente para inferencia")
+        logging.info(f"🔍 Datos cargados correctamente para inferencia. Dimensiones: {df.shape}")
 
         # Cargar modelo
         model = load_model(model_path)
@@ -28,10 +27,13 @@ def run_inference(data_path: str, model_path: str, output_path: str):
 
         # Guardar predicciones
         save_predictions(predictions, output_path)
+        logging.info(f"✅ Predicciones guardadas en {output_path}")
 
+    except FileNotFoundError as e:
+        logging.error(f"❌ Error: No se encontró el archivo: {e}")
     except Exception as e:
         logging.error(f"❌ Error en el proceso de inferencia: {e}")
 
-
 if __name__ == "__main__":
-    run_inference("data/inference/test.csv", "model.joblib", "data/predictions/predictions.csv")
+    # Cambiar la ruta a data/prep/test.csv directamente
+    run_inference("data/prep/test.csv", "model.joblib", "data/predictions/predictions.csv")

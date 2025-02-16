@@ -20,30 +20,22 @@ def load_data(train_path, test_path):
 
 
 def clean_data(df_train, df_test):
-    """Limpia los datos manejando valores nulos."""
+    """Limpia los datos categóricos y numéricos en los DataFrames."""
     try:
-        # Reemplazar nulos categóricos con "None"
-        categorical_na = [
-            "Alley", "MasVnrType", "BsmtQual", "BsmtCond", "BsmtExposure", 
-            "BsmtFinType1", "BsmtFinType2", "FireplaceQu", "GarageType", 
-            "GarageFinish", "GarageQual", "GarageCond", "PoolQC", "Fence", "MiscFeature"
-        ]
-        df_train = df_train.fillna({col: "None" for col in categorical_na if col in df_train.columns})
-        df_test = df_test.fillna({col: "None" for col in categorical_na if col in df_test.columns})
+        # Limpiar variables categóricas
+        categorical_cols = df_train.select_dtypes(include=['object']).columns
+        for col in categorical_cols:
+            df_train[col].fillna("None", inplace=True)
+            if col in df_test.columns:
+                df_test[col].fillna("None", inplace=True)
 
-        # Reemplazar nulos numéricos con la mediana
-        numerical_na = ["LotFrontage", "MasVnrArea", "GarageYrBlt"]
-        for col in numerical_na:
-            if col in df_train.columns:
-                median_value = df_train[col].median()
-                df_train[col] = df_train[col].fillna(median_value)
-                df_test[col] = df_test[col].fillna(median_value)
-
-        # Reemplazar nulos en 'Electrical' con la moda
-        if "Electrical" in df_train.columns:
-            mode_value = df_train["Electrical"].mode()[0]
-            df_train["Electrical"] = df_train["Electrical"].fillna(mode_value)
-            df_test["Electrical"] = df_test["Electrical"].fillna(mode_value)
+        # Limpiar variables numéricas (incluyendo SalePrice en train)
+        numerical_cols = df_train.select_dtypes(include=['number']).columns
+        for col in numerical_cols:
+            median_value = df_train[col].median()
+            df_train[col].fillna(median_value, inplace=True)
+            if col in df_test.columns:
+                df_test[col].fillna(median_value, inplace=True)
 
         logging.info("✅ Limpieza de datos completada")
         return df_train, df_test
