@@ -89,8 +89,20 @@ python main_program.py
 
 - Se usaron `pylint` y `black` para garantizar un código limpio y estandarizado:
 "Your code has been rated at 7.21/10 (previous run: 7.01/10, +0.20)"
+
 - Se emplearon `Docstrings` en todas las funciones para facilitar la comprensión.
 - Se utilizó una estructura modular en la carpeta `src` para promover la reutilización de código.
+- Se debe correr el siguiente comando al final para verificar el estilo y calidad en todos los archivos `.py`:
+
+```bash
+black src/*.py *.py --check > black_report.txt && \
+pylint src/*.py *.py > pylint_report.txt && \
+flake8 src/*.py *.py > flake8_report.txt
+```
+
+Esto generará tres reportes que se pueden revisar para garantizar un código consistente y libre de errores.
+
+
 
 ## Autoría
 **Sofía Gerard**
