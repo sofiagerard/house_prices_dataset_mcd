@@ -3,7 +3,10 @@
 import pandas as pd
 import logging
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def create_features(df_train, df_test):
     """Crea nuevas características derivadas de las columnas existentes."""
@@ -11,18 +14,24 @@ def create_features(df_train, df_test):
         # Generar características para ambos DataFrames
         for df in [df_train, df_test]:
             # Crear HouseAge, TotalSF y TotalBath
-            df["HouseAge"] = df["YrSold"] - df[["YearBuilt", "YearRemodAdd"]].max(axis=1)
+            df["HouseAge"] = df["YrSold"] - df[["YearBuilt", "YearRemodAdd"]].max(
+                axis=1
+            )
             df["TotalSF"] = df["GrLivArea"] + df["TotalBsmtSF"]
             df["TotalBath"] = (
-                df["FullBath"] + (df["HalfBath"] * 0.5) +
-                df["BsmtFullBath"] + (df["BsmtHalfBath"] * 0.5)
+                df["FullBath"]
+                + (df["HalfBath"] * 0.5)
+                + df["BsmtFullBath"]
+                + (df["BsmtHalfBath"] * 0.5)
             )
 
             # Verificar y manejar nulos
             missing_cols = df[["HouseAge", "TotalSF", "TotalBath"]].isnull().sum()
             if missing_cols.any():
                 logging.warning(f"⚠️ Columnas con nulos detectadas: {missing_cols}")
-                df[["HouseAge", "TotalSF", "TotalBath"]] = df[["HouseAge", "TotalSF", "TotalBath"]].fillna(0)
+                df[["HouseAge", "TotalSF", "TotalBath"]] = df[
+                    ["HouseAge", "TotalSF", "TotalBath"]
+                ].fillna(0)
 
         # Validar la presencia de las columnas requeridas
         required_cols = ["HouseAge", "TotalSF", "TotalBath"]

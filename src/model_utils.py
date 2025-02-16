@@ -5,14 +5,27 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from typing import Optional
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # Definimos las características numéricas como una constante global
 NUMERICAL_FEATURES = [
-    "OverallQual", "GrLivArea", "TotalBsmtSF", "GarageCars", "GarageArea",
-    "1stFlrSF", "FullBath", "TotRmsAbvGrd", "YearBuilt", "YearRemodAdd",
-    "HouseAge", "TotalSF", "TotalBath"
+    "OverallQual",
+    "GrLivArea",
+    "TotalBsmtSF",
+    "GarageCars",
+    "GarageArea",
+    "1stFlrSF",
+    "FullBath",
+    "TotRmsAbvGrd",
+    "YearBuilt",
+    "YearRemodAdd",
+    "HouseAge",
+    "TotalSF",
+    "TotalBath",
 ]
+
 
 def train_and_save_model(train_path: str, model_path: str) -> None:
     """Entrena un modelo de regresión lineal y lo guarda en el disco."""
@@ -22,7 +35,9 @@ def train_and_save_model(train_path: str, model_path: str) -> None:
         # Verificar si están todas las columnas necesarias
         missing_cols = [col for col in NUMERICAL_FEATURES if col not in df.columns]
         if missing_cols:
-            raise ValueError(f"❌ Faltan las siguientes columnas en el dataset: {missing_cols}")
+            raise ValueError(
+                f"❌ Faltan las siguientes columnas en el dataset: {missing_cols}"
+            )
 
         # Separar variables predictoras y target
         X = df[NUMERICAL_FEATURES]
@@ -38,7 +53,9 @@ def train_and_save_model(train_path: str, model_path: str) -> None:
         rmse = mean_squared_error(y, y_pred) ** 0.5  # Calcular RMSE manualmente
         r2 = r2_score(y, y_pred)
 
-        logging.info(f"📊 Evaluación del modelo: MAE={mae:.2f}, RMSE={rmse:.2f}, R²={r2:.4f}")
+        logging.info(
+            f"📊 Evaluación del modelo: MAE={mae:.2f}, RMSE={rmse:.2f}, R²={r2:.4f}"
+        )
 
         # Guardar el modelo entrenado
         joblib.dump(model, model_path)
@@ -46,6 +63,7 @@ def train_and_save_model(train_path: str, model_path: str) -> None:
 
     except Exception as e:
         logging.error(f"❌ Error al entrenar el modelo: {e}")
+
 
 def load_model(model_path: str) -> Optional[LinearRegression]:
     """Carga un modelo previamente entrenado."""
@@ -56,6 +74,7 @@ def load_model(model_path: str) -> Optional[LinearRegression]:
     except Exception as e:
         logging.error(f"❌ Error al cargar el modelo: {e}")
         return None
+
 
 def make_predictions(model: LinearRegression, X: pd.DataFrame) -> Optional[pd.Series]:
     """Genera predicciones con el modelo entrenado."""
@@ -68,6 +87,7 @@ def make_predictions(model: LinearRegression, X: pd.DataFrame) -> Optional[pd.Se
     except Exception as e:
         logging.error(f"❌ Error al hacer predicciones: {e}")
         return None
+
 
 def save_predictions(predictions: pd.Series, output_path: str) -> None:
     """Guarda las predicciones en un archivo CSV."""

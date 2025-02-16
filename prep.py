@@ -8,7 +8,10 @@ import shutil
 import os
 
 # Configuración de logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def preprocess():
     """Preprocesa los datos: carga, limpieza, ingeniería de características y almacenamiento."""
@@ -52,10 +55,13 @@ def preprocess():
             shutil.copy(output_test, inference_test)
             logging.info(f"🔄 Archivo {output_test} copiado a {inference_test}")
         else:
-            logging.error(f"❌ Error: El archivo {output_test} no fue creado correctamente")
+            logging.error(
+                f"❌ Error: El archivo {output_test} no fue creado correctamente"
+            )
 
     except Exception as e:
         logging.error(f"❌ Error inesperado durante el preprocesamiento: {e}")
+
 
 if __name__ == "__main__":
     preprocess()

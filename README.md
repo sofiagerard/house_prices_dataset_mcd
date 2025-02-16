@@ -1,77 +1,99 @@
-# 🏠 Predicción de Precios de Viviendas 🏡
+# Proyecto: Predicción de Precios de Casas en CDMX
 
-Este proyecto utiliza Machine Learning para predecir precios de viviendas.
+## Estructura del Repositorio
 
-## 🚀 Cómo Ejecutar el Proyecto
-
-1. **Preprocesar Datos**  
-    ```bash
-    python prep.py
-    ```
-
-2. **Entrenar Modelo**  
-    ```bash
-    python train.py
-    ```
-
-3. **Realizar Predicciones**  
-    ```bash
-    python inference.py
-    ```
-
-4. **Ejecutar Todo el Flujo**  
-    ```bash
-    python main_program.py
-    ```
-
-## ⚙️ Estructura del Proyecto
-
-
-HOUSE_PRICES_DATASET_MCD/
-├── data/
-├── notebooks/
+```plaintext
+.
+├── data
+│   ├── inference
+│   │   └── test.csv
+│   ├── predictions
+│   │   └── predictions.csv
+│   ├── prep
+│   │   ├── test.csv
+│   │   └── train.csv
+│   └── raw
+│       ├── data_description.txt
+│       ├── sample_submission.csv
+│       ├── test.csv
+│       └── train.csv
+├── notebooks
 │   ├── eda_model1.ipynb
-│   ├── eda_model2.ipynb
-│   └── eda_model2.py
-├── src/
+│   ├── eda_model2_fact.ipynb
+│   └── eda_model2.ipynb
+├── src
 │   ├── __init__.py
 │   ├── data_utils.py
-│   ├── inference_utils.py
+│   ├── feature_engineering_utils.py
 │   └── model_utils.py
-├── tests/
-│   └── .gitkeep
+├── tests
+│   └── data_processing.log
 ├── .gitignore
 ├── environment.yml
+├── inference.py
 ├── main_program.py
+├── model.joblib
 ├── prep.py
 ├── README.md
+├── sandbox.ipynb
 └── train.py
-HOUSE_PRICES_DATASET_MCD/
-├── data/                     # Datos sin procesar, preparados, de inferencia y predicciones
-│   ├── raw/
-│   │   ├── train.csv
-│   │   └── test.csv
-│   ├── prep/
-│   │   ├── train_prep.csv
-│   │   └── test_prep.csv
-│   ├── inference/
-│   │   └── new_data.csv
-│   └── predictions/
-│       └── predictions.csv
-├── notebooks/                # Análisis exploratorio (EDA)
-│   ├── eda_model1.ipynb
-│   ├── eda_model2.ipynb
-│   └── eda_model2.py
-├── src/                      # Módulos reutilizables
-│   ├── __init__.py
-│   ├── data_utils.py         # Funciones de carga, limpieza e ingeniería de datos
-│   ├── inference_utils.py    # Funciones para inferencia
-│   └── model_utils.py        # Funciones para entrenamiento y evaluación
-├── tests/                    # Pruebas unitarias
-│   └── .gitkeep
-├── .gitignore                # Archivos a ignorar por git
-├── environment.yml           # Definición del entorno Conda
-├── main_program.py            # Script que orquesta todo el flujo
-├── prep.py                    # Script de preprocesamiento
-├── README.md                  # Documentación del proyecto
-└── train.py                   # Script de entrenamiento
+```
+
+## Descripción del Proyecto
+Este proyecto tiene como objetivo predecir los precios de casas en la Ciudad de México utilizando un modelo de regresión lineal implementado en Python. Se utilizan datos públicos y técnicas de ingeniería de características, limpieza de datos y modelado.
+
+## Archivos Principales
+
+- **prep.py**: Preprocesa los datos, aplica ingeniería de características y guarda una copia para inferencia.
+- **train.py**: Entrena un modelo de regresión lineal utilizando los datos preprocesados.
+- **inference.py**: Utiliza el modelo entrenado para hacer predicciones sobre nuevos datos.
+- **main_program.py**: Ejecuta el flujo completo del proyecto (preprocesamiento, entrenamiento e inferencia).
+
+## Estructura de Código
+
+- **src/data_utils.py**: Funciones para cargar y limpiar datos.
+- **src/feature_engineering_utils.py**: Funciones para crear nuevas características.
+- **src/model_utils.py**: Funciones para entrenar, cargar y predecir con el modelo.
+
+## Requerimientos
+
+Para instalar las dependencias necesarias, usa:
+```bash
+conda env create -f environment.yml
+conda activate house_prices_env
+```
+
+## Uso
+
+1. Preprocesar los datos:
+```bash
+python prep.py
+```
+
+2. Entrenar el modelo:
+```bash
+python train.py
+```
+
+3. Generar predicciones:
+```bash
+python inference.py
+```
+
+4. Ejecutar todo el flujo de trabajo:
+```bash
+python main_program.py
+```
+
+## Mejores Prácticas
+
+- Se usaron `pylint` y `black` para garantizar un código limpio y estandarizado:
+"Your code has been rated at 7.21/10 (previous run: 7.01/10, +0.20)"
+- Se emplearon `Docstrings` en todas las funciones para facilitar la comprensión.
+- Se utilizó una estructura modular en la carpeta `src` para promover la reutilización de código.
+
+## Autoría
+**Sofía Gerard**
+
+
+
